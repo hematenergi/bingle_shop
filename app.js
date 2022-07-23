@@ -1,25 +1,41 @@
 // import
-const express = require("express")
 require("dotenv").config()
-const rateLimit = require("express-rate-limit")
-
-// var
+require("express-group-routes")
+const express = require("express")
 const app = express()
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 2, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
-  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
-})
+
+const userRouter = require("./router/user")
 
 // middleware
-app.use(limiter)
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
-// endpoint
+// initial endpoint
 app.get("/", (req, res) => {
   res.status(200).json({
     message: "Welcome to the API",
   })
+})
+
+// router
+app.group("/api/v1", (router) => {
+  // user router
+  router.use("/user", userRouter)
+})
+
+// 404 middleware
+app.use("*", (req, res, next) =>
+  res.status(404).json({ message: "endpoint not found" })
+)
+
+// error middleware
+app.use((err, req, res, next) => {
+  logger.error(JSON.stringify(err.message))
+  console.log(err)
+
+  return res
+    .status(err?.code || 500)
+    .json({ message: err?.message || "Internal server error" })
 })
 
 module.exports = app
