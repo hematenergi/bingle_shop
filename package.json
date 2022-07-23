@@ -12,7 +12,8 @@
   "author": "hemat_energi",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^2.0.19"
+    "nodemon": "^2.0.19",
+    "sequelize-cli": "^6.4.1"
   },
   "dependencies": {
     "dotenv": "^16.0.1",
