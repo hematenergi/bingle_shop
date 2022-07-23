@@ -4,7 +4,8 @@ require("express-group-routes")
 const express = require("express")
 const app = express()
 
-const userRouter = require("./router/user")
+const userRouter = require("./router/users")
+const itemRouter = require("./router/items")
 
 // middleware
 app.use(express.json())
@@ -20,7 +21,9 @@ app.get("/", (req, res) => {
 // router
 app.group("/api/v1", (router) => {
   // user router
-  router.use("/user", userRouter)
+  router.use("/users", userRouter)
+  // item router
+  router.use("/items", itemRouter)
 })
 
 // 404 middleware
