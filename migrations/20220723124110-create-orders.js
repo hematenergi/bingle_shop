@@ -13,14 +13,23 @@ module.exports = {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
+        unique: true,
       },
       user_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        references: {
+          model: "users",
+          key: "user_id",
+        },
       },
       item_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        references: {
+          model: "items",
+          key: "item_id",
+        },
       },
       createdAt: {
         type: Sequelize.DATE,
