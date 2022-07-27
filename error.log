@@ -10,3 +10,9 @@
 {"level":"error","message":"\"column \\\"id\\\" does not exist\"","service":"user-service"}
 {"level":"error","message":"\"column \\\"id\\\" does not exist\"","service":"user-service"}
 {"level":"error","message":"\"column \\\"id\\\" does not exist\"","service":"user-service"}
+{"level":"error","message":"\"column \\\"id\\\" does not exist\"","service":"user-service"}
+{"level":"error","message":"\"column \\\"id\\\" does not exist\"","service":"user-service"}
+{"level":"error","message":"\"column \\\"id\\\" does not exist\"","service":"user-service"}
+{"level":"error","message":"\"column usersModel.deleted_at does not exist\"","service":"user-service"}
+{"level":"error","message":"\"column usersModel.deleted_at does not exist\"","service":"user-service"}
+{"level":"error","message":"\"column \\\"address\\\" does not exist\"","service":"user-service"}

@@ -29,7 +29,7 @@ const registerUser = async (req, res, next) => {
       where: {
         email: bodies.email,
       },
-      attributes: ["id"],
+      attributes: ["user_id"],
     })
 
     if (isUserExist) {
