@@ -5,9 +5,9 @@ const express = require("express")
 const app = express()
 const winston = require("winston")
 
-const userRouter = require("./router/users")
-const itemRouter = require("./router/items")
-const orderRouter = require("./router/orders")
+const userRouter = require("./router/users.router")
+const itemRouter = require("./router/items.router")
+const orderRouter = require("./router/orders.router")
 
 // logger
 const logger = winston.createLogger({
