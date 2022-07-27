@@ -1,4 +1,4 @@
-const { getItems } = require("../controllers/items")
+const { getItems } = require("../controllers/itemsController")
 
 const router = require("express").Router()
 
