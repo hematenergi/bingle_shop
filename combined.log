@@ -16,3 +16,4 @@
 {"level":"error","message":"\"column usersModel.deleted_at does not exist\"","service":"user-service"}
 {"level":"error","message":"\"column usersModel.deleted_at does not exist\"","service":"user-service"}
 {"level":"error","message":"\"column \\\"address\\\" does not exist\"","service":"user-service"}
+{"level":"error","message":"\"Unexpected string in JSON at position 99\"","service":"user-service"}
