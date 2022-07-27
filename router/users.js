@@ -1,4 +1,4 @@
-const { getUser, registerUser } = require("../controllers/usersController")
+const { getUser, registerUser } = require("../controllers/users.controller")
 
 const router = require("express").Router()
 const rateLimit = require("express-rate-limit")

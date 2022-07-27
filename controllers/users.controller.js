@@ -1,4 +1,4 @@
-const Users = require("../models/usersModel")
+const usersModel = require("../models/users.model")
 const bcrypt = require("bcrypt")
 
 const getUser = (req, res) => {
@@ -25,7 +25,7 @@ const registerUser = async (req, res, next) => {
   try {
     const bodies = req.body
 
-    const isUserExist = await Users.findOne({
+    const isUserExist = await usersModel.findOne({
       where: {
         email: bodies.email,
       },
@@ -41,7 +41,7 @@ const registerUser = async (req, res, next) => {
 
     const hasedPassword = bcrypt.hashSync(bodies.password, 12)
 
-    const user = await Users.create({
+    const user = await usersModel.create({
       email: bodies.email,
       password: hasedPassword,
       name: bodies.name,
