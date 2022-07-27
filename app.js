@@ -10,7 +10,7 @@ const orderRouter = require("./router/orders")
 
 // middleware
 app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({ extended: false }))
 
 // initial endpoint
 app.get("/", (req, res) => {
@@ -36,7 +36,7 @@ app.use("*", (req, res, next) =>
 
 // error middleware
 app.use((err, req, res, next) => {
-  logger.error(JSON.stringify(err.message))
+  // logger.error(JSON.stringify(err.message))
   console.log(err)
 
   return res

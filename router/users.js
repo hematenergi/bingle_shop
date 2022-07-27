@@ -1,4 +1,4 @@
-const { getUser } = require("../controllers/users")
+const { getUser, registerUser } = require("../controllers/users")
 
 const router = require("express").Router()
 const rateLimit = require("express-rate-limit")
@@ -11,5 +11,6 @@ const userLimitter = rateLimit({
 })
 
 router.get("/", userLimitter, getUser)
+router.post("/register", registerUser)
 
 module.exports = router
