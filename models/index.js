@@ -1,4 +1,4 @@
-const Users = require("./users")
+const Users = require("./usersModel")
 const sequelize = require("./sequelize")
 
 // Users.belongsTo(Roles, {

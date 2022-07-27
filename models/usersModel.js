@@ -1,11 +1,11 @@
 const Sequelize = require("sequelize")
 const sequelizeConfig = require("./sequelizeConfig")
 
-class Users extends Sequelize.Model {}
+class usersModel extends Sequelize.Model {}
 
-Users.init(
+usersModel.init(
   {
-    id: {
+    user_id: {
       type: Sequelize.DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
@@ -30,8 +30,8 @@ Users.init(
     underscored: true,
     paranoid: true,
     freezeTableName: true,
-    tableName: "Users",
+    tableName: "users",
   }
 )
 
-module.exports = Users
+module.exports = usersModel
