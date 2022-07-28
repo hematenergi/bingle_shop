@@ -2,23 +2,16 @@ const usersModel = require("../models/users.model")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 
-const getUser = (req, res) => {
+const getUser = async (req, res) => {
+  const users = await usersModel.findAll({
+    attributes: {
+      exclude: ["password"],
+    },
+  })
+
   res.status(200).json({
-    message: "Welcome to user API",
-    data: [
-      {
-        id: 1,
-        name: "John Doe",
-        email: "johndoe@gmail.com",
-        phone: "081234567890",
-      },
-      {
-        id: 2,
-        name: "Jane Doe",
-        email: "janedoe@gmail.com",
-        phone: "081234567890",
-      },
-    ],
+    message: "Welcome to users API",
+    data: users,
   })
 }
 
@@ -50,6 +43,7 @@ const registerUser = async (req, res, next) => {
       email: bodies.email,
       password: hasedPassword,
       name: bodies.name,
+      address: bodies.address,
     })
 
     return res.status(200).json({
@@ -58,6 +52,7 @@ const registerUser = async (req, res, next) => {
       data: {
         name: user.name,
         email: user.email,
+        address: user.address,
       },
     })
   } catch (error) {
