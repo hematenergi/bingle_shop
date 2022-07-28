@@ -2,48 +2,27 @@
 const { faker } = require("@faker-js/faker")
 const bcrypt = require("bcrypt")
 
+const generateFakeUser = (qty) => {
+  let user = []
+  for (let i = 0; i < qty; i++) {
+    user.push({
+      name: faker.name.firstName(),
+      email: faker.internet.email().toLowerCase(),
+      password: bcrypt.hashSync("admin123", 12),
+      address: faker.address.cityName(),
+      created_at: new Date(),
+      updated_at: new Date(),
+    })
+  }
+  return user
+}
+
 module.exports = {
   async up(queryInterface, Sequelize) {
-    /**
-     * Add seed commands here.
-     *
-     * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
-     *   isBetaMember: false
-     * }], {});
-     */
-    await queryInterface.bulkInsert(
-      "users",
-      [
-        {
-          name: faker.name.firstName(),
-          email: faker.internet.email(),
-          password: bcrypt.hashSync("admin123", 12),
-          address: faker.address.cityName(),
-          created_at: new Date(),
-          updated_at: new Date(),
-        },
-        {
-          name: faker.name.firstName(),
-          email: faker.internet.email(),
-          password: bcrypt.hashSync("admin123", 12),
-          address: faker.address.cityName(),
-          created_at: new Date(),
-          updated_at: new Date(),
-        },
-      ],
-      {}
-    )
+    await queryInterface.bulkInsert("users", generateFakeUser(100), {})
   },
 
   async down(queryInterface, Sequelize) {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
     await queryInterface.bulkDelete("users", null, {})
   },
 }
