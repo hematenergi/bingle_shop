@@ -1,5 +1,6 @@
 "use strict"
 const { faker } = require("@faker-js/faker")
+const bcrypt = require("bcrypt")
 
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -18,50 +19,18 @@ module.exports = {
         {
           name: faker.name.firstName(),
           email: faker.internet.email(),
-          password: "admin123",
+          password: bcrypt.hashSync("admin123", 12),
           address: faker.address.cityName(),
+          created_at: new Date(),
+          updated_at: new Date(),
         },
         {
           name: faker.name.firstName(),
           email: faker.internet.email(),
-          password: "admin123",
+          password: bcrypt.hashSync("admin123", 12),
           address: faker.address.cityName(),
-        },
-        {
-          name: faker.name.firstName(),
-          email: faker.internet.email(),
-          password: "admin123",
-          address: faker.address.cityName(),
-        },
-        {
-          name: faker.name.firstName(),
-          email: faker.internet.email(),
-          password: "admin123",
-          address: faker.address.cityName(),
-        },
-        {
-          name: faker.name.firstName(),
-          email: faker.internet.email(),
-          password: "admin123",
-          address: faker.address.cityName(),
-        },
-        {
-          name: faker.name.firstName(),
-          email: faker.internet.email(),
-          password: "admin123",
-          address: faker.address.cityName(),
-        },
-        {
-          name: faker.name.firstName(),
-          email: faker.internet.email(),
-          password: "admin123",
-          address: faker.address.cityName(),
-        },
-        {
-          name: faker.name.firstName(),
-          email: faker.internet.email(),
-          password: "admin123",
-          address: faker.address.cityName(),
+          created_at: new Date(),
+          updated_at: new Date(),
         },
       ],
       {}
