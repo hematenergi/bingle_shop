@@ -60,7 +60,47 @@ const registerUser = async (req, res, next) => {
   }
 }
 
+const loginUser = async (req, res, next) => {
+  try {
+    const bodies = req.body
+
+    const user = await usersModel.findOne({
+      where: {
+        email: bodies.email,
+      },
+    })
+
+    if (!user) {
+      throw {
+        code: 400,
+        message: "Email not found",
+      }
+    }
+
+    const isPasswordValid = bcrypt.compareSync(bodies.password, user.password)
+
+    if (!isPasswordValid) {
+      throw {
+        code: 400,
+        message: "Password not match",
+      }
+    }
+
+    return res.status(200).json({
+      code: 200,
+      message: "Success login",
+      data: {
+        name: user.name,
+        email: user.email,
+      },
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
   getUser,
   registerUser,
+  loginUser,
 }
