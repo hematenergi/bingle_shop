@@ -1,5 +1,6 @@
 const usersModel = require("../models/users.model")
 const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken")
 
 const getUser = (req, res) => {
   res.status(200).json({
@@ -19,6 +20,10 @@ const getUser = (req, res) => {
       },
     ],
   })
+}
+
+function generateAccessToken(username) {
+  return jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: "3600s" })
 }
 
 const registerUser = async (req, res, next) => {
