@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken")
 const getUser = async (req, res) => {
   const users = await usersModel.findAll({
     attributes: {
-      exclude: ["password"],
+      exclude: ["password", "createdAt", "updatedAt", "deletedAt"],
     },
   })
 
@@ -15,8 +15,12 @@ const getUser = async (req, res) => {
   })
 }
 
-function generateAccessToken(username) {
-  return jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: "3600s" })
+const generateAccessToken = (username) => {
+  const secretKey = process.env.JWT_SECRET_KEY || "hemat_energi"
+  const accessToken = jwt.sign({ username }, secretKey, {
+    expiresIn: "1h",
+  })
+  return accessToken
 }
 
 const registerUser = async (req, res, next) => {

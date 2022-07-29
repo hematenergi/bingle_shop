@@ -19,7 +19,7 @@ const generateFakeUser = (qty) => {
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.bulkInsert("users", generateFakeUser(100), {})
+    await queryInterface.bulkInsert("users", generateFakeUser(50), {})
   },
 
   async down(queryInterface, Sequelize) {
