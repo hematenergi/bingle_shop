@@ -17,11 +17,11 @@ usersModel.init(
     email: {
       type: Sequelize.DataTypes.STRING,
     },
-    password: {
-      type: Sequelize.DataTypes.STRING,
-    },
     address: {
       type: Sequelize.DataTypes.TEXT,
+    },
+    password: {
+      type: Sequelize.DataTypes.STRING,
     },
   },
   {
@@ -30,7 +30,7 @@ usersModel.init(
     underscored: true,
     paranoid: true,
     freezeTableName: true,
-    tableName: "users",
+    tableName: "tbl_users",
   }
 )
 

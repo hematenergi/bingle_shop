@@ -2,13 +2,7 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    /**
-     * Add altering commands here.
-     *
-     * Example:
-     * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
-     */
-    await queryInterface.createTable("items", {
+    await queryInterface.createTable("tbl_items", {
       item_id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -17,30 +11,23 @@ module.exports = {
       },
       name: {
         type: Sequelize.STRING,
-        allowNull: false,
       },
       price: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+      },
+      stock: {
+        type: Sequelize.INTEGER,
       },
       created_at: {
         type: Sequelize.DATE,
-        allowNull: false,
       },
       updated_at: {
         type: Sequelize.DATE,
-        allowNull: false,
       },
     })
   },
 
   async down(queryInterface, Sequelize) {
-    /**
-     * Add reverting commands here.
-     *
-     * Example:
-     * await queryInterface.dropTable('users');
-     */
-    await queryInterface.dropTable("users")
+    await queryInterface.dropTable("tbl_items")
   },
 }
