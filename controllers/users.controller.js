@@ -1,6 +1,6 @@
 const usersModel = require("../models/users.model")
 const bcrypt = require("bcrypt")
-const jwt = require("jsonwebtoken")
+const { generateAccessToken } = require("../helper/helper")
 
 const getUser = async (req, res) => {
   const users = await usersModel.findAll({
@@ -13,14 +13,6 @@ const getUser = async (req, res) => {
     message: "Welcome to users API",
     data: users,
   })
-}
-
-const generateAccessToken = (username) => {
-  const secretKey = process.env.JWT_SECRET_KEY || "hemat_energi"
-  const accessToken = jwt.sign({ username }, secretKey, {
-    expiresIn: "1h",
-  })
-  return accessToken
 }
 
 const registerUser = async (req, res, next) => {
@@ -81,6 +73,14 @@ const loginUser = async (req, res, next) => {
       }
     }
 
+    const token =
+      "Bearer " +
+      generateAccessToken({
+        email: user.email,
+        password: user.password,
+      })
+    console.log(token, "token")
+
     const isPasswordValid = bcrypt.compareSync(bodies.password, user.password)
 
     if (!isPasswordValid) {
@@ -96,6 +96,7 @@ const loginUser = async (req, res, next) => {
       data: {
         name: user.name,
         email: user.email,
+        token: token,
       },
     })
   } catch (error) {

@@ -4,6 +4,7 @@ require("express-group-routes")
 const express = require("express")
 const app = express()
 const winston = require("winston")
+const cookieParser = require("cookie-parser")
 
 const userRouter = require("./router/users.router")
 const itemRouter = require("./router/items.router")
@@ -34,6 +35,7 @@ if (process.env.NODE_ENV !== "production") {
 // middleware
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+app.use(cookieParser())
 
 // initial endpoint
 app.get("/", (req, res) => {
