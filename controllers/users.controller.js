@@ -1,6 +1,6 @@
 const usersModel = require("../models/users.model")
 const bcrypt = require("bcrypt")
-const { generateAccessToken } = require("../helper/helper")
+const { generateAccessToken } = require("../utils/helper")
 
 const getUser = async (req, res) => {
   const users = await usersModel.findAll({

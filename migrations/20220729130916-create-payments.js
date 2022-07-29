@@ -2,21 +2,32 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("tbl_items", {
-      item_id: {
+    await queryInterface.createTable("tbl_payments", {
+      payment_id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         unique: true,
       },
-      name: {
+      order_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "tbl_orders",
+          key: "order_id",
+        },
+      },
+      payment_name: {
         type: Sequelize.STRING,
       },
-      price: {
+      payment_amount: {
         type: Sequelize.INTEGER,
       },
-      stock: {
-        type: Sequelize.INTEGER,
+      payment_status: {
+        type: Sequelize.STRING,
+      },
+      payment_date: {
+        type: Sequelize.DATE,
       },
       created_at: {
         type: Sequelize.DATE,
@@ -31,6 +42,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("tbl_items")
+    await queryInterface.dropTable("tbl_payments")
   },
 }
