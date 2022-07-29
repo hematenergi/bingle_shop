@@ -17,7 +17,16 @@ const generateFakeUser = (qty) => {
       name: faker.name.firstName() + " " + faker.name.lastName(),
       email: faker.internet.email().toLowerCase(),
       password: bcrypt.hashSync("admin123", 12),
-      address: faker.address.cityName(),
+      address:
+        faker.address.street() +
+        ", No." +
+        faker.address.streetAddress() +
+        " " +
+        faker.address.cityName() +
+        " - " +
+        faker.address.streetSuffix() +
+        " " +
+        faker.address.zipCode(),
       created_at: new Date(),
       updated_at: new Date(),
     })
