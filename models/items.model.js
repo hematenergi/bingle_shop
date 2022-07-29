@@ -27,7 +27,7 @@ itemModel.init(
     underscored: true,
     paranoid: true,
     freezeTableName: true,
-    tableName: "tbl_users",
+    tableName: "tbl_items",
   }
 )
 
