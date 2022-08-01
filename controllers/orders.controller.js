@@ -1,4 +1,4 @@
-const { Orders, OrderItems } = require("../models")
+const { Orders, OrderItems, Users } = require("../models")
 
 const getOrder = (req, res) => {
   res.status(200).json({
@@ -26,14 +26,18 @@ const createOrder = async (req, res, next) => {
       },
     ]
 
-    const order = await Orders.create({
-      order_data: new Date(),
-      user_id: req.user_id,
-      status: "pending",
-      total_price: items.reduce(
-        (acc, cur) => acc + cur.price * cur.quantity,
-        0
-      ),
+    // const order = await Orders.create({
+    //   order_date: new Date(),
+    //   user_id: req.user_id,
+    //   // status: "pending",
+    //   total_price: items.reduce(
+    //     (acc, cur) => acc + cur.price * cur.quantity,
+    //     0
+    //   ),
+    // })
+
+    const orderItem = await Users.findAll({
+      include: "orders",
     })
 
     // const order_id = order.id
@@ -53,8 +57,9 @@ const createOrder = async (req, res, next) => {
 
     return res.status(201).json({
       message: "Create order success",
-      order_id,
-      order_items,
+      data: orderItem,
+      // order_id,
+      // order_items,
     })
   } catch (error) {
     next(error)

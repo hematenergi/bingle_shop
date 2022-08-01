@@ -17,31 +17,30 @@ Orders.belongsTo(Users, {
 
 Orders.belongsToMany(Items, {
   through: "tbl_order_items",
-  as: "items",
+  as: "item",
   foreignKey: "order_id",
   // otherKey: "item_id",
 })
 
-Items.belongsToMany(Orders, {
-  through: "tbl_order_items",
-  as: "orders",
-  foreignKey: "item_id",
-  // otherKey: "order_id",
-})
-
 Orders.hasMany(OrderItems, {
-  as: "orders",
-  foreignKey: "order_id",
-})
-
-OrderItems.belongsTo(Orders, {
   as: "order",
   foreignKey: "order_id",
 })
 
-Items.hasMany(OrderItems, {
-  as: "items",
+Items.belongsToMany(Orders, {
+  through: "tbl_order_items",
+  as: "order",
   foreignKey: "item_id",
+  // otherKey: "order_id",
+})
+
+Items.hasMany(OrderItems, {
+  as: "item",
+  foreignKey: "item_id",
+})
+OrderItems.belongsTo(Orders, {
+  as: "order",
+  foreignKey: "order_id",
 })
 
 OrderItems.belongsTo(Items, {
