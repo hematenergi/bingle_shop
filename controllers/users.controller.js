@@ -97,7 +97,7 @@ const loginUser = async (req, res, next) => {
       data: {
         name: user.name,
         email: user.email,
-        token: token,
+        token: token.split(" ")[1],
       },
     })
   } catch (error) {

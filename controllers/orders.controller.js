@@ -11,6 +11,8 @@ const createOrder = async (req, res, next) => {
     // list item from a postman
     // const { items } = req.body
 
+    console.log(req.user_id, "user_id")
+
     const items = [
       {
         item_id: 1,
@@ -24,22 +26,30 @@ const createOrder = async (req, res, next) => {
       },
     ]
 
-    // const order = await Orders.create({
-    //   user_id: req.user_id,
-    // })
+    const order = await Orders.create({
+      order_data: new Date(),
+      user_id: req.user_id,
+      status: "pending",
+      total_price: items.reduce(
+        (acc, cur) => acc + cur.price * cur.quantity,
+        0
+      ),
+    })
 
     // const order_id = order.id
 
-    const order_items = await Promise.all(
-      items.map(async (item) => {
-        const order_item = await OrderItems.create({
-          order_id: 1,
-          item_id: item.item_id,
-          quantity: item.quantity,
-        })
-        return order_item
-      })
-    )
+    // const order_items = await Promise.all(
+    //   items.map(async (item) => {
+    //     const order_item = await OrderItems.create({
+    //       order_id: 1,
+    //       item_id: item.item_id,
+    //       quantity: item.quantity,
+    //       price: item.price,
+    //       total_price: item.quantity * item.price,
+    //     })
+    //     return order_item
+    //   })
+    // )
 
     return res.status(201).json({
       message: "Create order success",

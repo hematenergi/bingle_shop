@@ -20,6 +20,8 @@ orderModel.init(
         model: "tbl_users",
         key: "user_id",
       },
+      onUpdate: "cascade",
+      onDelete: "cascade",
     },
     status: {
       type: Sequelize.DataTypes.STRING,

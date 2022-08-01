@@ -17,6 +17,8 @@ orderItemsModel.init(
         model: "tbl_orders",
         key: "order_id",
       },
+      onUpdate: "cascade",
+      onDelete: "cascade",
     },
     item_id: {
       type: Sequelize.DataTypes.INTEGER,
@@ -24,6 +26,8 @@ orderItemsModel.init(
         model: "tbl_items",
         key: "item_id",
       },
+      onUpdate: "cascade",
+      onDelete: "cascade",
     },
     quantity: {
       type: Sequelize.DataTypes.INTEGER,

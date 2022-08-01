@@ -63,6 +63,7 @@ app.use("*", (req, res, next) =>
 app.use((err, req, res, next) => {
   logger.error(JSON.stringify(err.message))
   console.log("error message : ", err.message)
+  // console.log(err)
 
   return res
     .status(err?.code || 500)
