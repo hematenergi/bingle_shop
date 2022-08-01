@@ -76,6 +76,7 @@ const loginUser = async (req, res, next) => {
     const token =
       "Bearer " +
       generateAccessToken({
+        user_id: user.user_id,
         email: user.email,
         password: user.password,
       })

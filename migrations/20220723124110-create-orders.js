@@ -25,6 +25,12 @@ module.exports = {
           key: "item_id",
         },
       },
+      status: {
+        type: Sequelize.STRING,
+      },
+      total_price: {
+        type: Sequelize.INTEGER,
+      },
       created_at: {
         type: Sequelize.DATE,
       },
