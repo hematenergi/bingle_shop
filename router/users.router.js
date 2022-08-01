@@ -6,6 +6,9 @@ const {
 
 const router = require("express").Router()
 const rateLimit = require("express-rate-limit")
+const validation = require("../middleware/validation.middleware")
+const registerSchema = require("../validations/register.schema")
+const loginSchema = require("../validations/login.schema")
 
 const userLimitter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
@@ -15,7 +18,7 @@ const userLimitter = rateLimit({
 })
 
 router.get("/", userLimitter, getUser)
-router.post("/register", registerUser)
-router.post("/login", loginUser)
+router.post("/register", validation(registerSchema), registerUser)
+router.post("/login", validation(loginSchema), loginUser)
 
 module.exports = router
