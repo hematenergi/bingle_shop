@@ -2,9 +2,9 @@ const jwt = require("jsonwebtoken")
 const { faker } = require("@faker-js/faker")
 const bcrypt = require("bcrypt")
 
-const generateAccessToken = (username) => {
+const generateAccessToken = (data) => {
   const secretKey = process.env.JWT_SECRET_KEY || "hemat_energi"
-  const accessToken = jwt.sign({ username }, secretKey, {
+  const accessToken = jwt.sign(data, secretKey, {
     expiresIn: "1h",
   })
   return accessToken

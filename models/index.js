@@ -1,6 +1,6 @@
 const Users = require("./users.model")
 const Items = require("./items.model")
-const Orders = require("./order.model")
+const Orders = require("./orders.model")
 const OrderItems = require("./orderItems.model")
 
 const sequelize = require("./sequelizeConfig")

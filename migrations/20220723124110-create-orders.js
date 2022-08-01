@@ -9,20 +9,15 @@ module.exports = {
         autoIncrement: true,
         unique: true,
       },
+      order_date: {
+        type: Sequelize.DATE,
+      },
       user_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: "tbl_users",
           key: "user_id",
-        },
-      },
-      item_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: "tbl_items",
-          key: "item_id",
         },
       },
       status: {

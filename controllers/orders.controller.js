@@ -1,4 +1,4 @@
-const { Orders } = require("../models")
+const { Orders, OrderItems } = require("../models")
 
 const getOrder = (req, res) => {
   res.status(200).json({
@@ -8,14 +8,18 @@ const getOrder = (req, res) => {
 
 const createOrder = async (req, res, next) => {
   try {
-    const { user_id, items } = req.body
+    // list item from a postman
+    const { items } = req.body
+
     const order = await Orders.create({
-      user_id,
+      user_id: req.user_id,
     })
+
     const order_id = order.id
+
     const order_items = await Promise.all(
       items.map(async (item) => {
-        const order_item = await OrderItem.create({
+        const order_item = await OrderItems.create({
           order_id,
           item_id: item.id,
           quantity: item.quantity,
@@ -23,7 +27,8 @@ const createOrder = async (req, res, next) => {
         return order_item
       })
     )
-    res.status(201).json({
+
+    return res.status(201).json({
       message: "Create order success",
       order_id,
       order_items,

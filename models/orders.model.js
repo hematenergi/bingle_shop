@@ -11,18 +11,14 @@ orderModel.init(
       primaryKey: true,
       unique: true,
     },
+    order_date: {
+      type: Sequelize.DataTypes.DATE,
+    },
     user_id: {
       type: Sequelize.DataTypes.INTEGER,
       references: {
         model: "tbl_users",
         key: "user_id",
-      },
-    },
-    item_id: {
-      type: Sequelize.DataTypes.INTEGER,
-      references: {
-        model: "tbl_items",
-        key: "item_id",
       },
     },
     status: {
