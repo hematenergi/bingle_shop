@@ -1,4 +1,5 @@
-const { Orders, OrderItems, Users } = require("../models")
+// const { Orders, OrderItems, Users } = require("../models")
+const { tbl_users } = require("../models")
 
 const getOrder = (req, res) => {
   res.status(200).json({
@@ -36,8 +37,8 @@ const createOrder = async (req, res, next) => {
     //   ),
     // })
 
-    const orderItem = await Users.findAll({
-      include: "orders",
+    const orderItem = await tbl_users.findAll({
+      include: "user_order",
     })
 
     // const order_id = order.id

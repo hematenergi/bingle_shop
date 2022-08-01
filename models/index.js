@@ -1,57 +1,46 @@
-const Users = require("./users.model")
-const Items = require("./items.model")
-const Orders = require("./orders.model")
-const OrderItems = require("./orderItems.model")
+"use strict"
 
-const sequelize = require("./sequelizeConfig")
+const fs = require("fs")
+const path = require("path")
+const Sequelize = require("sequelize")
+const basename = path.basename(__filename)
+const env = process.env.NODE_ENV || "development"
+const config = require(__dirname + "/../config/config.js")[env]
+const db = {}
 
-Users.hasMany(Orders, {
-  as: "orders",
-  foreignKey: "user_id",
-})
-
-Orders.belongsTo(Users, {
-  as: "user",
-  foreignKey: "user_id",
-})
-
-Orders.belongsToMany(Items, {
-  through: "tbl_order_items",
-  as: "item",
-  foreignKey: "order_id",
-  // otherKey: "item_id",
-})
-
-Orders.hasMany(OrderItems, {
-  as: "order",
-  foreignKey: "order_id",
-})
-
-Items.belongsToMany(Orders, {
-  through: "tbl_order_items",
-  as: "order",
-  foreignKey: "item_id",
-  // otherKey: "order_id",
-})
-
-Items.hasMany(OrderItems, {
-  as: "item",
-  foreignKey: "item_id",
-})
-OrderItems.belongsTo(Orders, {
-  as: "order",
-  foreignKey: "order_id",
-})
-
-OrderItems.belongsTo(Items, {
-  as: "item",
-  foreignKey: "item_id",
-})
-
-module.exports = {
-  sequelize,
-  Users,
-  Items,
-  Orders,
-  OrderItems,
+let sequelize
+if (config.use_env_variable) {
+  sequelize = new Sequelize(process.env[config.use_env_variable], config)
+} else {
+  sequelize = new Sequelize(
+    config.database,
+    config.username,
+    config.password,
+    config
+  )
 }
+
+fs.readdirSync(__dirname)
+  .filter((file) => {
+    return (
+      file.indexOf(".") !== 0 && file !== basename && file.slice(-3) === ".js"
+    )
+  })
+  .forEach((file) => {
+    const model = require(path.join(__dirname, file))(
+      sequelize,
+      Sequelize.DataTypes
+    )
+    db[model.name] = model
+  })
+
+Object.keys(db).forEach((modelName) => {
+  if (db[modelName].associate) {
+    db[modelName].associate(db)
+  }
+})
+
+db.sequelize = sequelize
+db.Sequelize = Sequelize
+
+module.exports = db

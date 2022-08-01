@@ -27,8 +27,8 @@ const generateFakeUser = (qty) => {
         faker.address.streetSuffix() +
         " " +
         faker.address.zipCode(),
-      created_at: new Date(),
-      updated_at: new Date(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
     })
   }
   return users
@@ -41,8 +41,8 @@ const generateFakeItem = (qty) => {
       name: faker.commerce.productName(),
       price: faker.commerce.price(1000, 100000, 0),
       stock: faker.datatype.number({ min: 10, max: 100 }),
-      created_at: new Date(),
-      updated_at: new Date(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
     })
   }
   return items

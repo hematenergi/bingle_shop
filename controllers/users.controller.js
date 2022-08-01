@@ -1,9 +1,11 @@
-const usersModel = require("../models/users.model")
+// const tbl_users = require("../models/users.model")
+
 const bcrypt = require("bcrypt")
+const { tbl_users } = require("../models")
 const { generateAccessToken } = require("../utils/helper")
 
 const getUser = async (req, res) => {
-  const users = await usersModel.findAll({
+  const users = await tbl_users.findAll({
     attributes: {
       exclude: ["password", "createdAt", "updatedAt", "deletedAt"],
     },
@@ -19,7 +21,7 @@ const registerUser = async (req, res, next) => {
   try {
     const bodies = req.body
 
-    const isUserExist = await usersModel.findOne({
+    const isUserExist = await tbl_users.findOne({
       where: {
         email: bodies.email,
       },
@@ -35,7 +37,7 @@ const registerUser = async (req, res, next) => {
 
     const hasedPassword = bcrypt.hashSync(bodies.password, 12)
 
-    const user = await usersModel.create({
+    const user = await tbl_users.create({
       email: bodies.email,
       password: hasedPassword,
       name: bodies.name,
@@ -60,7 +62,7 @@ const loginUser = async (req, res, next) => {
   try {
     const bodies = req.body
 
-    const user = await usersModel.findOne({
+    const user = await tbl_users.findOne({
       where: {
         email: bodies.email,
       },
