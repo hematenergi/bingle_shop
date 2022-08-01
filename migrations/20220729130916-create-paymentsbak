@@ -11,11 +11,12 @@ module.exports = {
       },
       order_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         references: {
           model: "tbl_orders",
           key: "order_id",
         },
+        onUpdate: "cascade",
+        onDelete: "cascade",
       },
       payment_name: {
         type: Sequelize.STRING,

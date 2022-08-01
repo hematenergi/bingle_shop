@@ -14,11 +14,12 @@ module.exports = {
       },
       user_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         references: {
           model: "tbl_users",
           key: "user_id",
         },
+        onUpdate: "cascade",
+        onDelete: "cascade",
       },
       status: {
         type: Sequelize.STRING,
