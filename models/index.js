@@ -3,8 +3,7 @@ const Items = require("./items.model")
 const Orders = require("./order.model")
 const OrderItems = require("./orderItems.model")
 
-const sequelize = require("./sequelize")
-const orderItemsModel = require("./orderItems.model")
+const sequelize = require("./sequelizeConfig")
 
 Users.hasMany(Orders, {
   as: "orders",

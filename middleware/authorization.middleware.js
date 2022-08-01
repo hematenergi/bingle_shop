@@ -9,19 +9,20 @@ const authorization = (role) => (req, res, next) => {
     const token = authorization.split(" ")[1] // ['Bearer', '<token>']
 
     // verify token using jwt
-    const decoded = jwt.verify(token, process.env.JWT_SECRET)
+    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY)
+    console.log(decoded, "decoded")
 
     // cek apakah role yang akses sudah sesuai
-    if (decoded.role !== role) {
-      throw {
-        code: 403,
-        message: "role tidak diijinkan",
-      }
-    }
+    // if (decoded.role !== role) {
+    //   throw {
+    //     code: 403,
+    //     message: "role tidak diijinkan",
+    //   }
+    // }
 
     // inject context
-    req.user_id = decoded.user_id
-    req.role = decoded.role
+    // req.user_id = decoded.user_id
+    // req.role = decoded.role
 
     next()
   } catch (error) {
