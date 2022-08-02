@@ -31,8 +31,7 @@ const createOrder = async (req, res, next) => {
           [Op.in]: itemIds,
         },
         stock: {
-          // [Op.gte]: itemFromBody.reduce((acc, item) => acc + item.quantity, 0),
-          [Op.gte]: itemFromBody.reduce((acc, item) => acc + item.quantity, 0),
+          [Op.gt]: 0,
         },
       },
     })
@@ -101,9 +100,6 @@ const createOrder = async (req, res, next) => {
     return res.status(201).json({
       message: "Create order success",
       existItem,
-      // data: order,
-      // order_id,
-      // data: order_items,
     })
   } catch (error) {
     next(error)
