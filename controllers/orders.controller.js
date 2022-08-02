@@ -64,36 +64,36 @@ const createOrder = async (req, res, next) => {
 
       await Promise.all(
         existItem.map(async (item) => {
-          const selectedPayload = itemFromBody.find((val) => {
-            val.item_id === item.id
-            // console.log(item, "item")
-          })
+          const selectedPayload = itemFromBody.find(
+            (val) => val.item_id === item.id
+          )
           console.log(selectedPayload, "selectedPayload")
 
-          // deduct stok buku
-          // await tbl_items.update(
-          //   {
-          //     stock: item.stock.available_stock - selectedPayload.qty,
-          //   },
-          //   {
-          //     where: {
-          //       book_id: item.id,
-          //     },
-          //     transaction: trx,
-          //   }
-          // )
+          await tbl_items.update(
+            {
+              stock: item.stock - selectedPayload.quantity,
+            },
+            {
+              where: {
+                id: item.id,
+              },
+              transaction: trx,
+            }
+          )
 
-          // // create transaction item
-          // await TransactionItems.create(
-          //   {
-          //     book_id: item.id,
-          //     transaction_id: transaction.id,
-          //     stock: selectedPayload.qty,
-          //   },
-          //   {
-          //     transaction: trx,
-          //   }
-          // )
+          // create transaction item
+          await tbl_order_items.create(
+            {
+              order_id: transaction.id,
+              item_id: item.id,
+              quantity: selectedPayload.quantity,
+              price: item.price,
+              total_price: item.price * selectedPayload.quantity,
+            },
+            {
+              transaction: trx,
+            }
+          )
         })
       )
     })
