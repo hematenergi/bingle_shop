@@ -57,7 +57,7 @@ const createOrder = async (req, res, next) => {
 
     return res.status(201).json({
       message: "Create order success",
-      data: orderItem,
+      data: order,
       // order_id,
       // order_items,
     })

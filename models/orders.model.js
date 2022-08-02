@@ -5,7 +5,7 @@ class tbl_orders extends Sequelize.Model {}
 
 tbl_orders.init(
   {
-    order_id: {
+    id: {
       type: Sequelize.DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
@@ -36,7 +36,7 @@ tbl_orders.init(
     underscored: true,
     paranoid: true,
     freezeTableName: true,
-    tableName: "tbl_order",
+    tableName: "tbl_orders",
   }
 )
 
