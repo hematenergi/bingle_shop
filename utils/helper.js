@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken")
 const { faker } = require("@faker-js/faker")
 const bcrypt = require("bcrypt")
+const moment = require("moment")
 
 const generateAccessToken = (data) => {
   const secretKey = process.env.JWT_SECRET_KEY || "hemat_energi"
@@ -48,8 +49,18 @@ const generateFakeItem = (qty) => {
   return items
 }
 
+const formatDateCustom = (date, format) => {
+  if (date === null) {
+    return null
+  }
+  if (date !== null) {
+    return moment(date).format(format)
+  }
+}
+
 module.exports = {
   generateAccessToken,
   generateFakeUser,
   generateFakeItem,
+  formatDateCustom,
 }

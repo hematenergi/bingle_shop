@@ -1,4 +1,11 @@
-const { tbl_orders, tbl_order_items, tbl_users } = require("../models")
+const {
+  tbl_orders,
+  tbl_order_items,
+  tbl_items,
+  sequelize,
+} = require("../models")
+const { Op } = require("sequelize")
+const { formatDateCustom } = require("../utils/helper")
 
 const getOrder = (req, res) => {
   res.status(200).json({
@@ -8,58 +15,95 @@ const getOrder = (req, res) => {
 
 const createOrder = async (req, res, next) => {
   try {
+    console.log(req.user_id, "user_id from context")
+
     // list item from a postman
-    // const { items } = req.body
+    const { items } = req.body
+    const itemFromBody = items
+    console.log(itemFromBody, "itemFromBody")
 
-    console.log(req.user_id, "user_id")
+    // search item id from tbl_items
+    const itemIds = itemFromBody.map((item) => item.item_id)
 
-    const items = [
-      {
-        item_id: 1,
-        quantity: 1,
-        price: 100000,
+    const existItem = await tbl_items.findAll({
+      where: {
+        id: {
+          [Op.in]: itemIds,
+        },
+        stock: {
+          // [Op.gte]: itemFromBody.reduce((acc, item) => acc + item.quantity, 0),
+          [Op.gte]: itemFromBody.reduce((acc, item) => acc + item.quantity, 0),
+        },
       },
-      {
-        item_id: 2,
-        quantity: 2,
-        price: 200000,
-      },
-    ]
-
-    const order = await tbl_orders.create({
-      order_date: new Date(),
-      user_id: req.user_id,
-      status: "pending",
-      total_price: items.reduce(
-        (acc, cur) => acc + cur.price * cur.quantity,
-        0
-      ),
     })
+    console.log(existItem, "existItem")
 
-    // const orderItem = await tbl_users.findAll({
-    //   include: "orders",
-    // })
+    // check if item exist
+    if (existItem.length !== itemFromBody.length) {
+      throw {
+        code: 400,
+        message: "Item not found",
+      }
+    }
 
-    // const order_id = order.id
+    await sequelize.transaction(async (trx) => {
+      const transaction = await tbl_orders.create(
+        {
+          user_id: req.user_id,
+          order_date: new Date(),
+          status: "pending",
+          total_price: itemFromBody.reduce(
+            (acc, item) => acc + item.price * item.quantity,
+            0
+          ),
+        },
+        {
+          transaction: trx,
+        }
+      )
 
-    // const order_items = await Promise.all(
-    //   items.map(async (item) => {
-    //     const order_item = await OrderItems.create({
-    //       order_id: 1,
-    //       item_id: item.item_id,
-    //       quantity: item.quantity,
-    //       price: item.price,
-    //       total_price: item.quantity * item.price,
-    //     })
-    //     return order_item
-    //   })
-    // )
+      await Promise.all(
+        existItem.map(async (item) => {
+          const selectedPayload = itemFromBody.find((val) => {
+            val.item_id === item.id
+            // console.log(item, "item")
+          })
+          console.log(selectedPayload, "selectedPayload")
+
+          // deduct stok buku
+          // await tbl_items.update(
+          //   {
+          //     stock: item.stock.available_stock - selectedPayload.qty,
+          //   },
+          //   {
+          //     where: {
+          //       book_id: item.id,
+          //     },
+          //     transaction: trx,
+          //   }
+          // )
+
+          // // create transaction item
+          // await TransactionItems.create(
+          //   {
+          //     book_id: item.id,
+          //     transaction_id: transaction.id,
+          //     stock: selectedPayload.qty,
+          //   },
+          //   {
+          //     transaction: trx,
+          //   }
+          // )
+        })
+      )
+    })
 
     return res.status(201).json({
       message: "Create order success",
-      data: order,
+      existItem,
+      // data: order,
       // order_id,
-      // order_items,
+      // data: order_items,
     })
   } catch (error) {
     next(error)
