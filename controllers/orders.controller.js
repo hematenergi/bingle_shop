@@ -1,4 +1,4 @@
-const { Orders, OrderItems, Users } = require("../models")
+const { tbl_orders, tbl_order_items, tbl_users } = require("../models")
 
 const getOrder = (req, res) => {
   res.status(200).json({
@@ -26,19 +26,19 @@ const createOrder = async (req, res, next) => {
       },
     ]
 
-    // const order = await Orders.create({
-    //   order_date: new Date(),
-    //   user_id: req.user_id,
-    //   // status: "pending",
-    //   total_price: items.reduce(
-    //     (acc, cur) => acc + cur.price * cur.quantity,
-    //     0
-    //   ),
-    // })
-
-    const orderItem = await Users.findAll({
-      include: "orders",
+    const order = await tbl_orders.create({
+      order_date: new Date(),
+      user_id: req.user_id,
+      status: "pending",
+      total_price: items.reduce(
+        (acc, cur) => acc + cur.price * cur.quantity,
+        0
+      ),
     })
+
+    // const orderItem = await tbl_users.findAll({
+    //   include: "orders",
+    // })
 
     // const order_id = order.id
 

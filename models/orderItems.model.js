@@ -1,11 +1,9 @@
 const Sequelize = require("sequelize")
-const itemModel = require("./items.model")
-const orderModel = require("./orders.model")
 const sequelizeConfig = require("./sequelizeConfig")
 
-class orderItemsModel extends Sequelize.Model {}
+class tbl_order_items extends Sequelize.Model {}
 
-orderItemsModel.init(
+tbl_order_items.init(
   {
     id: {
       type: Sequelize.DataTypes.INTEGER,
@@ -16,7 +14,7 @@ orderItemsModel.init(
     order_id: {
       type: Sequelize.DataTypes.INTEGER,
       references: {
-        model: orderModel,
+        model: "tbl_orders",
         key: "id",
       },
       onUpdate: "cascade",
@@ -25,7 +23,7 @@ orderItemsModel.init(
     item_id: {
       type: Sequelize.DataTypes.INTEGER,
       references: {
-        model: itemModel,
+        model: "tbl_items",
         key: "id",
       },
       onUpdate: "cascade",
@@ -51,4 +49,4 @@ orderItemsModel.init(
   }
 )
 
-module.exports = orderItemsModel
+module.exports = tbl_order_items

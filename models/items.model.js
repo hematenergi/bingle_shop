@@ -1,9 +1,9 @@
 const Sequelize = require("sequelize")
 const sequelizeConfig = require("./sequelizeConfig")
 
-class itemModel extends Sequelize.Model {}
+class tbl_items extends Sequelize.Model {}
 
-itemModel.init(
+tbl_items.init(
   {
     id: {
       type: Sequelize.DataTypes.INTEGER,
@@ -31,4 +31,4 @@ itemModel.init(
   }
 )
 
-module.exports = itemModel
+module.exports = tbl_items

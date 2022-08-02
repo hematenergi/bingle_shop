@@ -1,9 +1,9 @@
 const Sequelize = require("sequelize")
 const sequelizeConfig = require("./sequelizeConfig")
 
-class usersModel extends Sequelize.Model {}
+class tbl_users extends Sequelize.Model {}
 
-usersModel.init(
+tbl_users.init(
   {
     id: {
       type: Sequelize.DataTypes.INTEGER,
@@ -34,4 +34,4 @@ usersModel.init(
   }
 )
 
-module.exports = usersModel
+module.exports = tbl_users

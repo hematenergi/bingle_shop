@@ -1,7 +1,7 @@
-const itemModel = require("../models/items.model")
+const { tbl_items } = require("../models")
 
 const getItems = async (req, res) => {
-  const items = await itemModel.findAll({
+  const items = await tbl_items.findAll({
     attributes: {
       exclude: ["createdAt", "updatedAt", "deletedAt"],
     },
