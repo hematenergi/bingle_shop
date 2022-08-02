@@ -106,7 +106,51 @@ const createOrder = async (req, res, next) => {
   }
 }
 
+const updateStatusOrder = async (req, res, next) => {
+  try {
+    const { order_id, pay_amount } = req.body
+    const order = await tbl_orders.findOne({
+      where: {
+        id: order_id,
+      },
+    })
+
+    if (!order) {
+      throw {
+        code: 400,
+        message: "Order not found",
+      }
+    }
+
+    const changeAmount = pay_amount - order.total_price
+
+    await tbl_orders.update(
+      {
+        status: Number(pay_amount) === order.total_price ? "paid" : "pending",
+      },
+      {
+        where: {
+          id: order_id,
+        },
+      }
+    )
+
+    return res.status(200).json({
+      message: "Update order success",
+      info:
+        changeAmount < 0
+          ? "dont be lazy! get work!"
+          : "your money is enough, your change amount cannot be return",
+      billAmount: order.total_price,
+      changeAmount,
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
   getOrder,
   createOrder,
+  updateStatusOrder,
 }
