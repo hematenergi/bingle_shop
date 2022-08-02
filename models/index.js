@@ -38,10 +38,11 @@ Items.hasMany(OrderItems, {
   as: "item",
   foreignKey: "item_id",
 })
-OrderItems.belongsTo(Orders, {
-  as: "order",
-  foreignKey: "order_id",
-})
+
+// OrderItems.belongsTo(Orders, {
+//   as: "order",
+//   foreignKey: "order_id",
+// })
 
 OrderItems.belongsTo(Items, {
   as: "item",

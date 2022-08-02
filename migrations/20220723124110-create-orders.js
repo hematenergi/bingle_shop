@@ -3,7 +3,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable("tbl_orders", {
-      order_id: {
+      id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
@@ -16,7 +16,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {
           model: "tbl_users",
-          key: "user_id",
+          key: "id",
         },
         onUpdate: "cascade",
         onDelete: "cascade",

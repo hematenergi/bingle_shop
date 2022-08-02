@@ -5,7 +5,7 @@ class itemModel extends Sequelize.Model {}
 
 itemModel.init(
   {
-    item_id: {
+    id: {
       type: Sequelize.DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
